@@ -1,0 +1,14 @@
+replicaCount: 2
+image:
+  repository: nginxinc/nginx-unprivileged
+  tag: 1.27-alpine
+service:
+  port: 80
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 250m
+    memory: 128Mi
+

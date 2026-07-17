@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: yaml-demo
+  labels:
+    app.kubernetes.io/part-of: yaml-demo
+

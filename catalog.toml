@@ -1,0 +1,86 @@
+version = 1
+
+[[scenario]]
+id = "namespace"
+path = "manifests/base/namespace.yaml"
+mode = "raw-yaml"
+expected = "valid"
+
+[[scenario]]
+id = "workload-bundle"
+path = "manifests/base/workloads.yaml"
+mode = "raw-yaml"
+expected = "valid"
+
+[[scenario]]
+id = "network-bundle"
+path = "manifests/base/network.yaml"
+mode = "raw-yaml"
+expected = "valid"
+
+[[scenario]]
+id = "policy-bundle"
+path = "manifests/base/policies.yaml"
+mode = "raw-yaml"
+expected = "valid"
+
+[[scenario]]
+id = "batch-and-stateful"
+path = "manifests/base/operations.yaml"
+mode = "raw-yaml"
+expected = "valid"
+
+[[scenario]]
+id = "kustomize-dev"
+path = "manifests/overlays/dev"
+mode = "kustomize"
+expected = "valid"
+
+[[scenario]]
+id = "kustomize-staging"
+path = "manifests/overlays/staging"
+mode = "kustomize"
+expected = "valid"
+
+[[scenario]]
+id = "helm-chart"
+path = "charts/demo-app"
+mode = "helm"
+expected = "valid"
+
+[[scenario]]
+id = "argo-application"
+path = "gitops/argo/application.yaml"
+mode = "raw-yaml"
+expected = "valid"
+
+[[scenario]]
+id = "flux-kustomization"
+path = "gitops/flux/kustomization.yaml"
+mode = "raw-yaml"
+expected = "valid"
+
+[[scenario]]
+id = "observability-crds"
+path = "observability/prometheus-operator.yaml"
+mode = "raw-yaml"
+expected = "valid"
+
+[[scenario]]
+id = "syntax-error"
+path = "invalid/syntax-error.yaml"
+mode = "raw-yaml"
+expected = "parse-error"
+
+[[scenario]]
+id = "missing-kind"
+path = "invalid/missing-kind.yaml"
+mode = "raw-yaml"
+expected = "contract-error"
+
+[[scenario]]
+id = "missing-metadata-name"
+path = "invalid/missing-metadata-name.yaml"
+mode = "raw-yaml"
+expected = "contract-error"
+

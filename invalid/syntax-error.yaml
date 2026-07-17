@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syntax-error
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: syntax-error
+  template:
+    metadata:
+      labels:
+        app: syntax-error
+    spec:
+      containers:
+        - name: broken
+          image: registry.k8s.io/pause:3.10
+          ports: [
+

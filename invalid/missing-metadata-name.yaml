@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    case: missing-name
+data:
+  reason: metadata.name이 없다
+

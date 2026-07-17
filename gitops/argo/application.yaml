@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: yaml-demo-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Jungle-303-04/yaml-demo.git
+    targetRevision: main
+    path: manifests/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: yaml-demo
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+
