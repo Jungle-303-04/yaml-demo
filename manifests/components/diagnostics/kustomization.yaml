@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+configMapGenerator:
+  - name: demo-diagnostics
+    namespace: yaml-demo
+    literals:
+      - LOG_LEVEL=debug
+      - TRACE_SAMPLE_RATE=0.25
+generatorOptions:
+  disableNameSuffixHash: true
+  labels:
+    app.kubernetes.io/component: diagnostics
+patches:
+  - path: deployment-patch.yaml

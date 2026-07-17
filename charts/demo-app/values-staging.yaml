@@ -1,0 +1,12 @@
+replicaCount: 4
+image:
+  tag: 1.27.5-alpine
+service:
+  port: 8080
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi

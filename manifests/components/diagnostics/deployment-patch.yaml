@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-api
+  namespace: yaml-demo
+spec:
+  template:
+    metadata:
+      annotations:
+        demo.opsia.dev/diagnostics: enabled
+    spec:
+      containers:
+        - name: api
+          envFrom:
+            - configMapRef:
+                name: demo-api-config
+            - configMapRef:
+                name: demo-diagnostics

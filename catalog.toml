@@ -31,6 +31,12 @@ mode = "raw-yaml"
 expected = "valid"
 
 [[scenario]]
+id = "crd-and-custom-resource"
+path = "manifests/extensions/widget-crd.yaml"
+mode = "raw-yaml"
+expected = "valid"
+
+[[scenario]]
 id = "kustomize-dev"
 path = "manifests/overlays/dev"
 mode = "kustomize"
@@ -43,9 +49,22 @@ mode = "kustomize"
 expected = "valid"
 
 [[scenario]]
+id = "kustomize-component-generator-patch"
+path = "manifests/overlays/diagnostics"
+mode = "kustomize"
+expected = "valid"
+
+[[scenario]]
 id = "helm-chart"
 path = "charts/demo-app"
 mode = "helm"
+expected = "valid"
+
+[[scenario]]
+id = "helm-values-override"
+path = "charts/demo-app"
+mode = "helm"
+values = "charts/demo-app/values-staging.yaml"
 expected = "valid"
 
 [[scenario]]
@@ -83,4 +102,3 @@ id = "missing-metadata-name"
 path = "invalid/missing-metadata-name.yaml"
 mode = "raw-yaml"
 expected = "contract-error"
-
