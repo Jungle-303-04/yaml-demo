@@ -15,7 +15,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: report
-              image: registry.k8s.io/busybox:1.36.1
+              image: busybox:1.36.1
               command: ["sh", "-c", "date -u"]
               resources:
                 requests:
@@ -80,7 +80,7 @@ spec:
         name: data
       spec:
         accessModes: ["ReadWriteOnce"]
+        storageClassName: ebs-gp3
         resources:
           requests:
             storage: 1Gi
-
