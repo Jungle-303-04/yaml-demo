@@ -72,6 +72,14 @@ class CatalogTest(unittest.TestCase):
         self.assertNotIn("cluster-1", argo + flux + overlay)
         self.assertNotIn("cluster-2", argo + flux + overlay)
 
+    def test_read_only_nginx_has_bounded_runtime_storage(self) -> None:
+        workload = (ROOT / "manifests/base/workloads.yaml").read_text(encoding="utf-8")
+
+        self.assertIn("readOnlyRootFilesystem: true", workload)
+        self.assertIn("mountPath: /tmp", workload)
+        self.assertIn("medium: Memory", workload)
+        self.assertIn("sizeLimit: 32Mi", workload)
+
 
 if __name__ == "__main__":
     unittest.main()
