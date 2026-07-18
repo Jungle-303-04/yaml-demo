@@ -7,5 +7,6 @@ labels:
   - includeSelectors: false
     pairs:
       environment.opsia.dev/name: dev
+      opsia.dev/cluster-role: demo-server
 patches:
   - path: deployment-patch.yaml

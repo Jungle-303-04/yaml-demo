@@ -43,3 +43,17 @@ Helm values: charts/demo-app/values-staging.yaml
 `catalog.toml`의 `helm-values-override`는 같은 차트에 별도 values 파일을 적용해 diff를 확인한다. 모든 Kustomize 참조는 저장소 내부 경로만 사용하며 Helm 외부 의존성은 없다.
 
 `invalid/` 아래 파일과 이 저장소의 다른 예제는 렌더·탐색 검증 전용이다. 실제 클러스터에 적용하지 않는다.
+
+## demo-server 배포
+
+실제 적용 대상은 `demo-server` 클러스터다. 유효한 dev overlay를 직접 적용하거나, 같은 클러스터에 설치된
+Argo CD/Flux가 저장소를 동기화하도록 아래 진입점 중 하나를 사용한다.
+
+```bash
+kubectl --context demo-server apply -k manifests/overlays/dev
+kubectl --context demo-server apply -f gitops/argo/application.yaml
+kubectl --context demo-server apply -f gitops/flux/kustomization.yaml
+```
+
+Argo CD와 Flux 매니페스트의 in-cluster destination은 위 명령을 실행한 `demo-server` 자체를 뜻한다.
+`invalid/` 경로는 오류 계약 검증 전용이므로 어떤 배포 경로에서도 적용하지 않는다.
