@@ -57,6 +57,20 @@ class CatalogTest(unittest.TestCase):
         self.assertIn("manifests/overlays/diagnostics", readme)
         self.assertIn("charts/demo-app", readme)
         self.assertIn("charts/demo-app/values-staging.yaml", readme)
+        self.assertIn("kubectl --context demo-server apply -k manifests/overlays/dev", readme)
+
+    def test_gitops_and_overlay_target_demo_server(self) -> None:
+        argo = (ROOT / "gitops/argo/application.yaml").read_text(encoding="utf-8")
+        flux = (ROOT / "gitops/flux/kustomization.yaml").read_text(encoding="utf-8")
+        overlay = (ROOT / "manifests/overlays/dev/kustomization.yaml").read_text(
+            encoding="utf-8",
+        )
+
+        self.assertIn("opsia.dev/target-cluster: demo-server", argo)
+        self.assertIn("opsia.dev/target-cluster: demo-server", flux)
+        self.assertIn("opsia.dev/cluster-role: demo-server", overlay)
+        self.assertNotIn("cluster-1", argo + flux + overlay)
+        self.assertNotIn("cluster-2", argo + flux + overlay)
 
 
 if __name__ == "__main__":

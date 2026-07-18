@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: yaml-demo-dev
   namespace: argocd
+  annotations:
+    opsia.dev/target-cluster: demo-server
 spec:
   project: default
   source:
@@ -15,4 +17,3 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-
