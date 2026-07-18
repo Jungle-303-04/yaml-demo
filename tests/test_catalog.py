@@ -5,6 +5,8 @@ import sys
 import unittest
 from pathlib import Path
 
+import yaml
+
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
     "validate_catalog",
@@ -71,6 +73,34 @@ class CatalogTest(unittest.TestCase):
         self.assertIn("opsia.dev/cluster-role: demo-server", overlay)
         self.assertNotIn("cluster-1", argo + flux + overlay)
         self.assertNotIn("cluster-2", argo + flux + overlay)
+
+    def test_read_only_nginx_has_bounded_runtime_storage(self) -> None:
+        workload = (ROOT / "manifests/base/workloads.yaml").read_text(encoding="utf-8")
+
+        self.assertIn("readOnlyRootFilesystem: true", workload)
+        self.assertIn("mountPath: /tmp", workload)
+        self.assertIn("medium: Memory", workload)
+        self.assertIn("sizeLimit: 32Mi", workload)
+
+    def test_operations_use_portable_images_and_explicit_storage(self) -> None:
+        operations = list(
+            yaml.safe_load_all(
+                (ROOT / "manifests/base/operations.yaml").read_text(encoding="utf-8"),
+            ),
+        )
+        cron_job = next(document for document in operations if document["kind"] == "CronJob")
+        stateful_set = next(
+            document for document in operations if document["kind"] == "StatefulSet"
+        )
+
+        self.assertEqual(
+            cron_job["spec"]["jobTemplate"]["spec"]["template"]["spec"]["containers"][0]["image"],
+            "busybox:1.36.1",
+        )
+        self.assertEqual(
+            stateful_set["spec"]["volumeClaimTemplates"][0]["spec"]["storageClassName"],
+            "ebs-gp3",
+        )
 
 
 if __name__ == "__main__":

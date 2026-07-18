@@ -64,6 +64,14 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop: ["ALL"]
+          volumeMounts:
+            - name: nginx-runtime
+              mountPath: /tmp
+      volumes:
+        - name: nginx-runtime
+          emptyDir:
+            medium: Memory
+            sizeLimit: 32Mi
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -100,4 +108,3 @@ spec:
         runAsUser: 65532
         seccompProfile:
           type: RuntimeDefault
-
